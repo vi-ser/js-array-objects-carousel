@@ -48,14 +48,21 @@ console.log(images);
 
 // bersagliamo lo slider
 const sliderElement = document.getElementById("slider");
+const thumbnailsElement = document.getElementById("thumbnails");
 
 
 // tramite il metodo foreach prendo ogni indirizzo delle immagini dall'array
 images.forEach(currentEl => {
-    sliderElement.innerHTML += `<img src="./${currentEl.image}"</img>`
+    sliderElement.innerHTML += `<img src="./${currentEl.image}" alt="${currentEl.title}" class="slider-image"></img>`;
 });
 
 document.querySelector("#slider img:nth-of-type(1)").className = "active";
+
+// ripeto lo stesso per le miniature
+images.forEach(currentEl => {
+    thumbnailsElement.innerHTML += `<img src="./${currentEl.image}" alt="${currentEl.title}" class="thumbnail"></img>`;
+});
+
 
 /*
 -  salvo un contatore della slide
