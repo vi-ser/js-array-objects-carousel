@@ -51,14 +51,13 @@ const sliderElement = document.getElementById("slider");
 const thumbnailsElement = document.getElementById("thumbnails");
 
 // tramite il metodo foreach prendo ogni indirizzo delle immagini dall'array
-images.forEach(currentEl => {
+images.forEach((currentEl, index) => {
 
     // creo un elemento div in cui inserire  i testi
     let currentSlide = document.createElement("div");
     currentSlide.classList.add("slide-item");
 
     sliderElement.innerHTML += `<img src="./${currentEl.image}" alt="${currentEl.title}" class="slider-image"></img>`;
-
 
     // creo un elemento strong per visualizzare il titolo
     let sliderTitle = document.createElement("h4");
@@ -70,11 +69,17 @@ images.forEach(currentEl => {
     sliderText.textContent = currentEl.text;
     currentSlide.appendChild(sliderText);
 
+    // inserisco l'elemento nel DOM
     sliderElement.appendChild(currentSlide);
+
+    if (index === 0) {
+        currentSlide.classList.add("active");
+    }
 
 });
 
 document.querySelector("#slider img:nth-of-type(1)").className = "active";
+
 
 // ripeto lo stesso per le miniature
 images.forEach(currentEl => {
