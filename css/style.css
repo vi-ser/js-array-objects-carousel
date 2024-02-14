@@ -44,6 +44,36 @@
     font-size: 1.5em;
 }
 
+
+
+#thumbnails {
+    position: relative;
+}
+
+#thumbnails .fa-solid {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    font-size: 1.5em;
+    padding: 5px;
+    border-radius: 50px;
+}
+
+#thumbnails #up-arrow {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#thumbnails #down-arrow {
+    position: absolute;
+    bottom: 0;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
 #thumbnails img {
     height: 100px;
     object-fit: cover;
