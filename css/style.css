@@ -1,20 +1,70 @@
-/*
-Dato un array di oggetti letterali con:
- - url dell’immagine
- - titolo
- - descrizione
-Creare un carosello come nella foto allegata.
-Milestone 0:
-Come nel primo carosello realizzato, focalizziamoci prima sulla creazione del markup statico: costruiamo il container e inseriamo l'immagine grande in modo da poter stilare lo slider.
-Milestone 1:
-Ora rimuoviamo i contenuti statici e usiamo l’array di oggetti letterali per popolare dinamicamente il carosello.
-Al click dell'utente sulle frecce verso sinistra o destra, la nuova immagine attiva diventerà visibile e dovremo aggiungervi titolo e testo.
-Milestone 2:
-Aggiungere il ciclo infinito del carosello. Ovvero se la miniatura attiva è la prima e l'utente clicca la freccia verso destra, la miniatura che deve attivarsi sarà l'ultima e viceversa per l'ultima miniatura se l'utente clicca la freccia verso sinistra.
-BONUS 1:
-Aggiungere le thumbnails (sottoforma di miniatura) ed al click attivare l’immagine corrispondente.
-BONUS 2:
-Aggiungere funzionalità di autoplay: dopo un certo periodo di tempo (3 secondi) l’immagine attiva dovrà cambiare alla successiva in automatico.
-BONUS 3:
-Aggiungere bottoni di start / stop e di inversione del meccanismo di autoplay.
-*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+
+    margin-top: 300px;
+}
+
+
+#slider {
+    position: relative;
+
+    height: 400px;
+
+    border: 6px solid gray;
+    border-radius: 24px;
+
+    overflow: hidden;
+}
+
+#slider img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+#slider img:not(.active) {
+    display: none;
+}
+
+#slider #arrows {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 12px;
+
+    color: white;
+    font-size: 1.5em;
+    text-shadow: 1px 4px 3px black;
+
+
+}
+
+#slider #arrows>* {
+    transform: scale(1);
+
+    transition: transform 0.4s ease;
+}
+
+#slider #arrows>*:hover {
+    cursor: pointer;
+
+    transform: scale(1.2);
+}
