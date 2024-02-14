@@ -50,10 +50,28 @@ console.log(images);
 const sliderElement = document.getElementById("slider");
 const thumbnailsElement = document.getElementById("thumbnails");
 
-
 // tramite il metodo foreach prendo ogni indirizzo delle immagini dall'array
 images.forEach(currentEl => {
+
+    // creo un elemento div in cui inserire  i testi
+    let currentSlide = document.createElement("div");
+    currentSlide.classList.add("slide-item");
+
     sliderElement.innerHTML += `<img src="./${currentEl.image}" alt="${currentEl.title}" class="slider-image"></img>`;
+
+
+    // creo un elemento strong per visualizzare il titolo
+    let sliderTitle = document.createElement("h4");
+    sliderTitle.textContent = currentEl.title;
+    currentSlide.appendChild(sliderTitle);
+
+    // creo un elemento p per visualizzare il testo
+    let sliderText = document.createElement("p");
+    sliderText.textContent = currentEl.text;
+    currentSlide.appendChild(sliderText);
+
+    sliderElement.appendChild(currentSlide);
+
 });
 
 document.querySelector("#slider img:nth-of-type(1)").className = "active";
@@ -65,15 +83,6 @@ images.forEach(currentEl => {
 
 
 document.querySelector("#thumbnails img:nth-of-type(1)").className = "active";
-
-
-/*
--  salvo un contatore della slide
--  QUANDO premo la freccia SU
-    - prendo l'immagine attuale e le rimuovo la classe "active"  
-    - aumento il contatore di 1
-    - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
-*/
 
 
 // -  salvo un contatore della slide
