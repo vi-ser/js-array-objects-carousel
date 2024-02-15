@@ -35,7 +35,7 @@ const images = [
     }, {
         image: 'img/04.webp',
         title: 'Stray',
-        text: 'Lost, injured and alone, a stray cat must untangle an ancient mystery to escape a long-forgotten city',
+        text: 'Lost, injured and alone, a stray cat must untangle an ancient mystery to escape a long-forgotten city.',
     }, {
         image: 'img/05.webp',
         title: "Marvel's Avengers",
@@ -50,12 +50,13 @@ const thumbnailsElement = document.getElementById("thumbnails")
 
 
 // tramite un ciclo for prendiamo ogni indirizzo delle immagini dall'array
-images.forEach(function (currentImage) {
+images.forEach(function (currentImage, index) {
 
+    // inserisco l'elemento html dentro lo slider
     sliderElement.innerHTML += `
     <section class="slide">
 
-    <img src="./${currentImage.image}" alt="immagine 1">
+    <img src="./${currentImage.image}" alt="immagine ${index + 1}">
 
     <div class="details">
 
@@ -72,14 +73,12 @@ images.forEach(function (currentImage) {
     </section>
     `;
 
+    // inserisco l'anteprima dentro l'elemento thumbnails
     thumbnailsElement.innerHTML += `
-    <img src="./${currentImage.image}">
-    `
-
+    <img src="./${currentImage.image}" alt="immagine ${index + 1}">`
 })
 
-document.querySelector(".slide:nth-of-type(1)").classList.add("active");
-
+showSlide(1);
 
 // -  salvo un contatore della slide
 let slideNumber = 1;
@@ -87,64 +86,98 @@ let slideNumber = 1;
 // -  QUANDO premo la freccia GIÙ
 document.querySelector("#down-arrow").addEventListener("click", function () {
 
-
     if (slideNumber < images.length) {
-
-        // - prendo l'immagine attuale e le rimuovo la classe "active"  
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.remove("active");
 
         // - aumento il contatore di 1
         slideNumber++;
 
-        // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.add("active");
+        showSlide(slideNumber);
 
-        console.log(slideNumber);
 
     } else {
 
-        // - prendo l'immagine attuale e le rimuovo la classe "active"  
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.remove("active");
-
-        // resetto la variabile che mi conta l'immagine a cui sono arrivato
         slideNumber = 1;
 
-        // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.add("active");
-
+        showSlide(slideNumber);
     }
-
 
 });
 
-
 document.querySelector("#up-arrow").addEventListener("click", function () {
 
-    if (slideNumber > 1) {
-        // - prendo l'immagine attuale e le rimuovo la classe "active"  
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.remove("active");
 
-        // - diminuisco il contatore di 1
+    if (slideNumber > 1) {
+
         slideNumber--;
 
-        // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.add("active");
+        showSlide(slideNumber);
 
-        console.log(slideNumber);
 
     } else {
-
-        // - prendo l'immagine attuale e le rimuovo la classe "active"  
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.remove("active");
 
         // - metto il valore di slideNumebr = alla posizione dell'ultima immagine
         slideNumber = images.length;
 
-        // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
-        document.querySelector(`#slider .slide:nth-of-type(${slideNumber})`).classList.add("active");
-
+        showSlide(slideNumber);
     }
 
-
-
 });
+
+// gestisco click delle thumbnail aggiungendo l'addEventListener
+
+// ripesco dal document tutte le thumbnail
+const thumbnailsElements = document.querySelectorAll("#thumbnails img");
+
+thumbnailsElements.forEach(((currentThumbnail, index) => {
+
+    currentThumbnail.addEventListener("click", () => {
+
+        slideNumber = index + 1;
+
+        showSlide(slideNumber);
+
+    })
+
+}))
+
+
+function thumbnailClick(currentThumbnail, index) {
+
+    // !IMPORTANTE! il this nelle arrow function è sempre la window
+
+    // rimuovo la classe active dall'ultimo elemento attivo
+    document.querySelector(`.slide:nth-of-type(${slideNumber})`).classList.remove("active");
+
+    document.querySelector(`#thumbnails img:nth-of-type(${slideNumber})`).classList.remove("active");
+
+    // aggiornare slidenumber
+    slideNumber = index + 1;
+
+    // do alla slide corrispondente la classe active
+    document.querySelector(`.slide:nth-of-type(${index + 1})`).classList.add("active");
+
+    document.querySelector(`#thumbnails img:nth-of-type(${index + 1})`).classList.add("active");
+
+}
+
+function showSlide(number) {
+    // number -> slide da mostrare e anteprima collegata
+
+    //rimuoviamo la classe active da tutte le slide
+    const slides = document.querySelectorAll(".slide");
+    slides.forEach(currentSlide => {
+        currentSlide.classList.remove("active");
+
+    })
+
+    // - prendo l'immagine con il nuovo contatore e le aggiungo la classe "active"
+    document.querySelector(`#slider .slide:nth-of-type(${number})`).classList.add("active");
+
+    // prendo tutte le anteprime e rimuovo la classe active
+    const thumbs = document.querySelectorAll("#thumbnails img");
+    thumbs.forEach(img => {
+        img.classList.remove("active");
+    })
+
+    document.querySelector(`#thumbnails img:nth-of-type(${number})`).classList.add("active");
+}
